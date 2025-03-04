@@ -9,8 +9,8 @@ Window {
     readonly property double margin: 12
 
     visible: true
-    width: 1280
-    height: 720
+    width: 720
+    height: 640
     id: applicationWindow
     title: "VNA Automation"
 

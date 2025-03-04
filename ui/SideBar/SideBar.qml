@@ -5,7 +5,7 @@ import "../Components"
 Paper {
     id: paper
     height: parent.height
-    width: 84
+    width: 64
 
     signal navigateToPage(var page)
 
@@ -23,16 +23,16 @@ Paper {
             anchors.horizontalCenter: parent.horizontalCenter
             implicitHeight: parent.width / 2 + 20
             implicitWidth: parent.width / 2 + 20
-            iconSource: "../../resources/icons/home.svg"
+            iconSource: "../../resources/icons/tests.svg"
             iconSize: 32
-            onClicked: paper.navigateToPage("../ui/pages/Home.qml")
+            onClicked: paper.navigateToPage("../ui/pages/ManageAntenna.qml")
         }
 
         IconButton {
             anchors.horizontalCenter: parent.horizontalCenter
             implicitHeight: parent.width / 2 + 20
             implicitWidth: parent.width / 2 + 20
-            iconSource: "../../resources/icons/home.svg"
+            iconSource: "../../resources/icons/tools.svg"
             iconSize: 32
             onClicked: paper.navigateToPage("../ui/pages/ManageAntenna.qml")
         }

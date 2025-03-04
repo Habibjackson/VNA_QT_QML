@@ -34,6 +34,10 @@ QtObject {
     readonly property color textColor: currentTheme
                                        === Theme.Dark ? "#eeeeee" : currentTheme
                                                         === Theme.Custom ? "#3E2723" : "#000000"
+    // Text Colors
+    readonly property color textColorSecondary: currentTheme
+                                       === Theme.Dark ? "#B3B3B3" : currentTheme
+                                                        === Theme.Custom ? "#3E2723" : "#000000"
 
     // Button Colors
     readonly property color buttonColor: currentTheme === Theme.Dark ? "#3700B3" : currentTheme === Theme.Custom ? "#E65100" : "#6200EE"

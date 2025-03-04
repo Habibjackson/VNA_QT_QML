@@ -1,10 +1,9 @@
 import QtQuick
 import QtQuick.Controls.Material
 import "../Components"
+import "../Widgets"
 
 Paper {
     id: homePage
-    TextArea {
-        text: qsTr("some new text")
-    }
+    TestsList{}
 }

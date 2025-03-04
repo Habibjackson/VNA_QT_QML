@@ -5,5 +5,5 @@ import "../Widgets"
 Paper {
     id: manageAntenna
     // anchors.fill: parent
-    TiltControl {}
+    TestsList {}
 }
