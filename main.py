@@ -46,6 +46,7 @@ import os
 from PySide6.QtCore import QFileSystemWatcher, QUrl, QObject, QDir
 from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtWidgets import QApplication
+from  AntennaManager import AntennaManager
 
 class ProjectReloader(QObject):
     def __init__(self, engine, project_folder):

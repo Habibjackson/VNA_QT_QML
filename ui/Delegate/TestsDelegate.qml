@@ -4,30 +4,27 @@ import QtQuick.Layouts
 
 Item {
     width: parent.width
-    height: 65  // Increased height for better spacing
+    height: 65 // Increased height for better spacing
 
     Rectangle {
         id: container
         width: parent.width - 20
-        height: parent.height// Creates spacing between items
+        height: parent.height // Creates spacing between items
         radius: 8
-        color: "transparent"  // Alternating row colors
+        color: ListView.isCurrentItem ? theme.backgroundColorGrey1 : "transparent" // Alternating row colors
         border.width: 0
-        border.color: "#aaa"
         anchors.horizontalCenter: parent.horizontalCenter
 
         // Hover effect
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
-            onEntered: ()=>{
-                           container.color = theme.backgroundColorGrey1;
-                           container.border.width = 0.5
+            onEntered: () => {
+                           container.color = theme.backgroundColorGrey1
                        }
-            onExited: ()=>{
-                          container.color = "transparent";
-                          container.border.width = 0
-                      }  // Restore original color
+            onExited: () => {
+                          container.color = "transparent"
+                      } // Restore original color
         }
 
         ColumnLayout {
