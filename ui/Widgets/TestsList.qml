@@ -14,8 +14,6 @@ ColumnLayout {
         font.bold: true
         Layout.alignment: Qt.AlignLeft
         Layout.leftMargin: 12
-        // anchors.left: parent.left
-        // anchors.leftMargin: 12
     }
 
     ListView {

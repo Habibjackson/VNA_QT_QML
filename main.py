@@ -46,7 +46,7 @@ import os
 from PySide6.QtCore import QFileSystemWatcher, QUrl, QObject, QDir
 from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtWidgets import QApplication
-from  AntennaManager import AntennaManager
+from Models.AntennaListModel import AntennaListModel
 
 class ProjectReloader(QObject):
     def __init__(self, engine, project_folder):
@@ -93,7 +93,9 @@ class ProjectReloader(QObject):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     engine = QQmlApplicationEngine()
+    antennaModel = AntennaListModel()
 
+    engine.rootContext().setContextProperty("antennaModel", antennaModel )
     engine.load(QUrl.fromLocalFile("ui/main.qml"))
 
     if not engine.rootObjects():

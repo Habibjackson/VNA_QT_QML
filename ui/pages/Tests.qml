@@ -4,6 +4,6 @@ import "../Components"
 import "../Widgets"
 
 Paper {
-    id: homePage
+    id: testsPage
     TestsList{}
 }
