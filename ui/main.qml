@@ -1,5 +1,6 @@
 import QtQuick 6.5
 import QtQuick.Controls 6.5
+import QtQuick.Layouts
 import "BottomBar"
 import "SideBar"
 import "Components"
@@ -16,24 +17,27 @@ Window {
 
     color: theme.backgroundColor
 
-    SideBar {
-        id: sideBar
+    RowLayout {
+        spacing: applicationWindow.margin
         anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.bottom: bottomBar.top
-        onNavigateToPage: page => pageContent.mainStack.push(page)
-        anchors.margins: applicationWindow.margin
-    }
-
-    MainContent {
-        id: pageContent
-        anchors.left: sideBar.right
-        anchors.bottom: bottomBar.top
         anchors.right: parent.right
         anchors.top: parent.top
+        anchors.bottom: bottomBar.top
         anchors.margins: applicationWindow.margin
-        clip: true
-        // width: parent.width - sideBar.width
+
+        SideBar {
+            id: sideBar
+            Layout.fillHeight: true
+            onNavigateToPage: page => pageContent.mainStack.push(page)
+        }
+
+        MainContent {
+            id: pageContent
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            clip: true
+            // width: parent.width - sideBar.width
+        }
     }
 
     BottomBar {

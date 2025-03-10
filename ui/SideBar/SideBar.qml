@@ -27,7 +27,7 @@ Paper {
             iconSource: "../../resources/icons/ManageAntenna.svg"
             iconSize: 32
             onClicked: paper.navigateToPage("../ui/pages/ManageAntenna.qml")
-            CTooltip{
+            CTooltip {
                 text: qsTr("Manage Antenna")
                 visible: manageAntennaBtn.hovered
                 target: manageAntennaBtn
@@ -39,10 +39,10 @@ Paper {
             anchors.horizontalCenter: parent.horizontalCenter
             implicitHeight: parent.width / 2 + 20
             implicitWidth: parent.width / 2 + 20
-            iconSource: "../../resources/icons/testIcon.svg"
+            iconSource: "../../resources/icons/TestIcon.svg"
             iconSize: 32
             onClicked: paper.navigateToPage("../ui/pages/Tests.qml")
-            CTooltip{
+            CTooltip {
                 text: qsTr("Tests")
                 visible: testsBtn.hovered
                 target: testsBtn
@@ -57,7 +57,7 @@ Paper {
             iconSource: "../../resources/icons/tools.svg"
             iconSize: 32
             onClicked: paper.navigateToPage("../ui/pages/Tools.qml")
-            CTooltip{
+            CTooltip {
                 text: qsTr("Tools")
                 visible: toolsBtn.hovered
                 target: toolsBtn

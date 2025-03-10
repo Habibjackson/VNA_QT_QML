@@ -19,7 +19,7 @@ QtObject {
     // Background Colors
     readonly property color backgroundColor: currentTheme === Theme.Dark ? "#000" : currentTheme === Theme.Custom ? "#FFF3E0" : "#FFFFFF"
     readonly property color cardColor: currentTheme
-                                       === Theme.Dark ? "#212121" : currentTheme
+                                       === Theme.Dark ? "#121212" : currentTheme
                                                         === Theme.Custom ? "#FFE0B2" : "#000"
     readonly property color cardOpacity: currentTheme === Theme.Dark ? 0.4 : currentTheme === Theme.Custom ? "0.7" : "0.8"
     readonly property color barColor: currentTheme === Theme.Dark ? "#111" : currentTheme === Theme.Custom ? "#FFE0B2" : "#F5F5F5"
@@ -35,9 +35,7 @@ QtObject {
                                        === Theme.Dark ? "#eeeeee" : currentTheme
                                                         === Theme.Custom ? "#3E2723" : "#000000"
     // Text Colors
-    readonly property color textColorSecondary: currentTheme
-                                       === Theme.Dark ? "#B3B3B3" : currentTheme
-                                                        === Theme.Custom ? "#3E2723" : "#000000"
+    readonly property color textColorSecondary: currentTheme === Theme.Dark ? "#B3B3B3" : currentTheme === Theme.Custom ? "#3E2723" : "#000000"
 
     // Button Colors
     readonly property color buttonColor: currentTheme === Theme.Dark ? "#3700B3" : currentTheme === Theme.Custom ? "#E65100" : "#6200EE"

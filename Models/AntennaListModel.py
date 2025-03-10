@@ -9,7 +9,7 @@ class AntennaListModel(QAbstractListModel):
     def __init__(self):
         super().__init__()
         self.files = []  # List to hold filenames
-        self.directory = "encrypted_files"  # Folder where encrypted JSON files are stored
+        self.directory = os.path.join("database", "antennas")  # Folder where encrypted JSON files are stored
         if not os.path.exists(self.directory):
             os.makedirs(self.directory)
 
@@ -35,5 +35,6 @@ class AntennaListModel(QAbstractListModel):
     def loadFiles(self):
         """Load all encrypted JSON files into the model and refresh."""
         self.beginResetModel()
-        self.files = [f for f in os.listdir(self.directory) if f.endswith(".myjson")]
+        self.files = [f for f in os.listdir(self.directory) if f.endswith(".ant")]
+        print("The loaded files are", self.files)
         self.endResetModel()

@@ -1,6 +1,10 @@
 {
     "files": [
+        "AntennaManager/AntennaManager.py",
         "Backend.py",
+        "Dialogs/AddAntennaModel.qml",
+        "Models/AntennaListModel.py",
+        "database/antennas/2594.ant",
         "helloworld.qml",
         "main.py",
         "ui/ApplicationPane/ApplicationPane.qml",
@@ -11,9 +15,11 @@
         "ui/Components/MainContent.qml",
         "ui/Components/Paper.qml",
         "ui/Components/Theme.qml",
+        "ui/Components/TitleBar.qml",
         "ui/LeftPane/LeftPane.qml",
         "ui/Widgets/TiltControl.qml",
         "ui/Widgets/listfile.qml",
+        "ui/pages/AddAntenna.qml",
         "ui/pages/ManageAntenna.qml",
         "ui/statusbar/BottomBar.qml"
     ]

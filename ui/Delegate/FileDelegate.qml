@@ -19,6 +19,7 @@ Item {
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
+            onClicked: fileHandler.loadEncryptedFile(model.filename)
             onEntered: () => {
                            container.color = theme.backgroundColorGrey1
                        }
@@ -29,18 +30,13 @@ Item {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.margins: 10
+            anchors.margins: 4
 
             Text {
-                text: model.name
+                text: model.filename
                 font.bold: true
                 Layout.fillWidth: true
                 color: theme.textColor
-            }
-            Text {
-                text: model.value
-                color: theme.textColorSecondary
-                Layout.rightMargin: 10
             }
         }
     }
