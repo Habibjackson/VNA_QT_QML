@@ -10,9 +10,6 @@ SpinBox {
         bottom: spinBox.from
         top: spinBox.to
     }
-    Text {
-        text: "spinBox"
-    }
 
     contentItem: TextInput {
         text: spinBox.textFromValue(spinBox.value, spinBox.locale)
@@ -32,7 +29,7 @@ SpinBox {
         implicitHeight: 40
         radius: 20
 
-        color: spinBox.up.hovered ? "#313131" : theme.paperBackground
+        color: spinBox.up.hovered ? "#313131" : "transparent"
         x: spinBox.mirrored ? 0 : ((parent.width - width) - 5)
         y: ((spinBox.height - height) / 2)
 
@@ -53,7 +50,7 @@ SpinBox {
         implicitHeight: 40
         radius: 20
 
-        color: spinBox.down.hovered ? "#313131" : theme.paperBackground
+        color: spinBox.down.hovered ? "#313131" : "transparent"
         x: spinBox.mirrored ? ((parent.width - width) - 5) : 0
         y: ((spinBox.height - height) / 2)
 
@@ -68,6 +65,6 @@ SpinBox {
     }
     background: Rectangle {
         radius: 25
-        color: theme.paperBackground
+        color: "#1f1f1f"
     }
 }
