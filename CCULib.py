@@ -462,43 +462,4 @@ if __name__ == "__main__":
 
     ccuLib = CCULib()
     ccuLib.intialize()
-
-    # ccuLib.fixtilt([3,5,9])
-
-    # current_tilt = ccuLib.settilt(2,100)
-    # ccuLib.getcommandresults()
-    # ccuLib.updated_fetch_command_results()
-    # print("Current Tilt:", current_tilt)
-
-
     ccuLib.Updated_gettilt()
-    # ccuLib.getcommandresults()
-    # ccuLib.updated_fetch_command_results()
-    # print("Current Tilt:", current_tilt)
-
-    # calibration_response = ccuLib.calibrate(3,1)
-    # ccuLib.getcommandresults()
-    # ccuLib.updated_fetch_command_results()
-    # print("Calibration Response:", calibration_response)
-
-    # ccuLib.closeServer()
-
-
-# while(1):
-#     deg = int(input("Enter the tilt degree: "))
-#     settilt(1, 1, deg)
-#     time.sleep(15)
-#     print(f"set tilt started at {time.time()}")
-#
-    # while (getcommandresults() == 'OK:EXEC_RESULT_PENDING\n'):
-    #     s.send(b'GetCommandResult:65536\n')
-    #     msg = s.recv(1024)
-    #     msgdec = msg.decode()
-    #     print(msgdec, f"Messaged recieved at {time.time()}")
-    #     time.sleep(1)
-#
-#     gettilt(1, 1)
-#     s.send(b'GetCommandAnswerBytes:65536\n')
-#     msg_tilt = s.recv(1024)
-#     msg_tilt_dec = msg_tilt.decode()
-#     print(msg_tilt_dec, "degree")
