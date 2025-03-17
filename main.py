@@ -48,6 +48,7 @@ from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtWidgets import QApplication
 from Models.AntennaListModel import AntennaListModel
 from AntennaManager.AntennaManager import FileHandler
+from settingsManager import SettingsManager
 
 class ProjectReloader(QObject):
     def __init__(self, engine, project_folder):
@@ -95,10 +96,12 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     engine = QQmlApplicationEngine()
     antennaModel = AntennaListModel()
+    settings = SettingsManager()
     antennaModel.loadFiles()
 
     fileHandler = FileHandler(antennaModel)
 
+    engine.rootContext().setContextProperty("settings", settings)
     engine.rootContext().setContextProperty("antennaModel", antennaModel)
     engine.rootContext().setContextProperty("fileHandler", fileHandler)
     engine.load(QUrl.fromLocalFile("ui/main.qml"))

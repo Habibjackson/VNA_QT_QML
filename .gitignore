@@ -2,3 +2,4 @@
 .qtcreator
 qtPython.*
 */__pycache__/*
+venv

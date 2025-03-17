@@ -25,6 +25,19 @@ Item {
             onExited: () => {
                           container.color = "transparent"
                       } // Restore original color
+            
+             onClicked: {
+            var pageIndex = model.index;
+            console.log(pageIndex)
+            // Dynamically load the page based on the selected item
+            if (pageIndex === 0) {
+                pageContent.mainStack.push("../pages/SinglePortTest.qml");
+            } else if (pageIndex === 1) {
+                pageContent.mainStack.push("../pages/DoublePort.qml")
+            } else if (pageIndex === 3) {
+                pageContent.mainStack.push("../pages/InterBand.qml")
+            }
+        }
         }
 
         ColumnLayout {

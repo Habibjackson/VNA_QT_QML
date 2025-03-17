@@ -77,20 +77,6 @@ ColumnLayout {
                 value: "Tests between two ports"
             }
         }
-        onSelectionChanged: {
-            // Get the name of the selected page
-            var pageName = currentIndex;
-            console.log(pageName)
-            // Dynamically load the page based on the selected item
-            if (pageName === 0) {
-                pageContent.mainStack.push("../pages/SinglePortTest.qml");
-            } else if (pageName === "Settings") {
-                pageContent.mainStack.push("../pages/AddAntenna.qml")
-            } else if (pageName === "Profile") {
-                pageContent.mainStack.push("../pages/AddAntenna.qml")
-            }
-        }
-
         delegate: TestsDelegate {}
     }
 }
