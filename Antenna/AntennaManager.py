@@ -6,13 +6,16 @@ from PySide6.QtCore import Slot, Signal, QObject
 
 SECRET_KEY = "jiqwfoef4qognot4"
 
-class FileHandler(QObject):
+class AntennaManger(QObject):
     fileLoaded = Signal(str, dict)  # Signal emitted when a file is loaded
 
     def __init__(self, model):
         super().__init__()
         self.model = model
 
+    def antenna_model(self):
+        return self.model
+    
     def encrypt_json(self, data):
         """Encrypt JSON data using AES."""
         json_str = json.dumps(data)
@@ -32,7 +35,7 @@ class FileHandler(QObject):
             return {}
 
     @Slot(str)
-    def loadEncryptedFile(self, fileName):
+    def loadAntenna(self, fileName):
         """Load and decrypt a selected JSON file."""
         filePath = os.path.join(self.model.directory, fileName)
         if not os.path.exists(filePath):
@@ -46,7 +49,7 @@ class FileHandler(QObject):
         self.fileLoaded.emit(fileName, data)
 
     @Slot(str, dict)
-    def saveEncryptedFile(self, fileName, data):
+    def saveAntenna(self, fileName, data):
         """Save JSON data in an encrypted format."""
         filePath = os.path.join(self.model.directory, fileName)
         encrypted_data = self.encrypt_json(data)

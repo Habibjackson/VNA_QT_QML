@@ -101,7 +101,7 @@ if __name__ == "__main__":
 
     fileHandler = FileHandler(antennaModel)
 
-    engine.rootContext().setContextProperty("settings", settings)
+    engine.rootContext().setContextProperty("settingsManager", settings)
     engine.rootContext().setContextProperty("antennaModel", antennaModel)
     engine.rootContext().setContextProperty("fileHandler", fileHandler)
     engine.load(QUrl.fromLocalFile("ui/main.qml"))

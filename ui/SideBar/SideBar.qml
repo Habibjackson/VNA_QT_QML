@@ -78,7 +78,7 @@ Paper {
             implicitHeight: parent.width / 2 + 20
             implicitWidth: parent.width / 2 + 20
             icon.source: "../../resources/icons/tools.svg"
-            onClicked: paper.navigateToPage("../ui/pages/Tools.qml")
+            onClicked: paper.navigateToPage("../ui/pages/Settings.qml")
             CTooltip {
                 text: qsTr("Tools")
                 visible: toolsBtn.hovered

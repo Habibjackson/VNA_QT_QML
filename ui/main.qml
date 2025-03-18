@@ -10,10 +10,12 @@ Window {
     readonly property double margin: 12
 
     visible: true
-    width: 720
-    height: 640
+    width: settingsManager.windowWidth
+    height: settingsManger.windowHeight
     id: applicationWindow
     title: "VNA Automation"
+    minimumWidth: 400
+    minimumHeight: 500
 
     color: theme.backgroundColor
 
