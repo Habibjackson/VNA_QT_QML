@@ -43,8 +43,8 @@ Paper {
                         Layout.preferredWidth: 100
                     }
                     CSpinBox {
-                        Layout.fillWidth: true
                         id: portsNumber
+                        Layout.fillWidth: true
                     }
                 }
                 Label {
@@ -86,30 +86,52 @@ Paper {
                         width: parent.width
                         spacing: 4
                         Repeater {
+                            id: repeater
                             model: portsNumber.value
                             RowLayout {
+                                property alias port: combo1
+                                property alias min: spinBox1
+                                property alias max: spinBox2
+                                property alias unit: combo2
+
                                 Layout.fillWidth: true
                                 CComboBox {
+                                    id: combo1
                                     model: ["R1", "Y1", "B1"]
                                     Layout.fillWidth: true
                                 }
                                 CSpinBox {
+                                    id: spinBox1
                                     Layout.fillWidth: true
                                 }
                                 CSpinBox {
+                                    id: spinBox2
                                     Layout.fillWidth: true
                                 }
                                 CComboBox {
+                                    id: combo2
                                     Layout.fillWidth: true
-
                                     model: ['MHz', "Hz", "GHz"]
                                 }
                             }
                         }
                     }
                 }
-                CButton{
+                CButton {
                     text: qsTr("Create Antenna")
+                    onClicked: {
+                        var data = {"port info": {}};
+                        for (var i = 0; i < repeater.count; i++) {
+                            var item = repeater.itemAt(i);
+                            if (item) {
+                            }
+                        }
+                        var jsonString = JSON.stringify(data, null, 2);
+                        console.log(jsonString);  // Print JSON to console
+                        antennaManager.saveAntenna("2523.ant", data)
+
+                        // You can send jsonString to C++ or save it to a file
+                    }
                 }
             }
         }

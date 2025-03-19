@@ -47,8 +47,8 @@ from PySide6.QtCore import QFileSystemWatcher, QUrl, QObject
 from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtWidgets import QApplication
 from Models.AntennaListModel import AntennaListModel
-from AntennaManager.AntennaManager import FileHandler
 from settingsManager import SettingsManager
+from Antenna.AntennaManager import AntennaManager
 
 class ProjectReloader(QObject):
     def __init__(self, engine, project_folder):
@@ -99,18 +99,18 @@ if __name__ == "__main__":
     settings = SettingsManager()
     antennaModel.loadFiles()
 
-    fileHandler = FileHandler(antennaModel)
+    antennaManger = AntennaManager(antennaModel)
 
     engine.rootContext().setContextProperty("settingsManager", settings)
-    engine.rootContext().setContextProperty("antennaModel", antennaModel)
-    engine.rootContext().setContextProperty("fileHandler", fileHandler)
+    engine.rootContext().setContextProperty("antennaManager", antennaManger)
+    engine.rootContext().setContextProperty("antennaModel", antennaModel )
     engine.load(QUrl.fromLocalFile("ui/main.qml"))
 
     if not engine.rootObjects():
         sys.exit(-1)
 
     # Watch the entire project folder
-    project_folder = os.getcwd()  # Change this to your QML project folder
+    project_folder = os.path.join(os.getcwd(), "ui")  # Change this to your QML project folder
     reloader = ProjectReloader(engine, project_folder)
 
     sys.exit(app.exec())

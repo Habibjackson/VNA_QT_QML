@@ -1,7 +1,6 @@
 # This Python file uses the following encoding: utf-8
 import os
 from PySide6.QtCore import Qt, QFileSystemWatcher, QModelIndex, QAbstractListModel
-from AntennaManager import AntennaManager
 
 class AntennaListModel(QAbstractListModel):
     FilenameRole = Qt.UserRole + 1  # Define custom role for filenames

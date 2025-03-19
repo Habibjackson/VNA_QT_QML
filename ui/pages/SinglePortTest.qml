@@ -29,8 +29,11 @@ Paper {
                         color: theme.textColor
                     }
                     CComboBox {
+                        id: antennaCombo
+                        currentIndex: -1
                         Layout.fillWidth: true
-                        model: ["Antenna1", "Antenna2"]
+                        model: antennaModel
+                        onCurrentTextChanged: antennaManager.loadAntenna(antennaCombo.currentText)
                     }
                 }
                 RowLayout {
@@ -47,6 +50,13 @@ Paper {
         CButton {
             text: qsTr("Back")
             onClicked: pageContent.mainStack.pop()
+        }
+    }
+
+    Connections {
+        target: antennaManager
+        function onFileLoaded(filename, data) {
+            console.log(JSON.stringify(data));
         }
     }
 }

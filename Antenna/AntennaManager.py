@@ -2,17 +2,19 @@ import json
 import os
 import base64
 from Crypto.Cipher import AES
-from PySide6.QtCore import Slot, Signal, QObject
+from PySide6.QtCore import Slot, Signal, QObject, Property
+from Models.AntennaListModel import AntennaListModel
 
-SECRET_KEY = "jiqwfoef4qognot4"
+SECRET_KEY = b"jiqwfoef4qognot4"
 
-class AntennaManger(QObject):
+class AntennaManager(QObject):
     fileLoaded = Signal(str, dict)  # Signal emitted when a file is loaded
 
     def __init__(self, model):
         super().__init__()
         self.model = model
-
+        
+    @Property(AntennaListModel)
     def antenna_model(self):
         return self.model
     

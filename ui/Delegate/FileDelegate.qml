@@ -19,7 +19,7 @@ Item {
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
-            onClicked: fileHandler.loadEncryptedFile(model.filename)
+            onClicked: antennaManager.loadAntenna(model.filename)
             onEntered: () => {
                            container.color = theme.backgroundColorGrey1
                        }
