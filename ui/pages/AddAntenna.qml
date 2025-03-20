@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Dialogs
 import QtQuick.Controls.Material
 import "../Components"
 import "../Widgets"
@@ -24,6 +25,31 @@ Paper {
                 width: parent.width
                 height: parent.height
                 spacing: 8
+                CButton {
+                    Layout.fillWidth: true
+                    text: qsTr("Upload Data Sheet")
+                    onClicked: fileDialog.open()
+                }
+                FileDialog {
+                    id: fileDialog
+                    title: "Select a datasheet"
+                    nameFilters: ["document (*.pdf)"]
+                    // selectMultiple: false
+                    onAccepted: {
+                        console.log(selectedFile.toString().replace("file:///", ""))
+                        antennaManager.parseAntennaFromDatasheet(selectedFile.toString().replace("file:///", ""))
+                        // You can use fileUrl to load the file or pass it to backend functions.
+                    }
+                    onRejected: {
+                        console.log("File selection was canceled.");
+                    }
+                }
+
+                CLine {
+                    Layout.fillWidth: true
+                    height: 30
+                    text: "OR"
+                }
                 RowLayout {
                     Layout.fillWidth: true
                     Label {
@@ -120,15 +146,16 @@ Paper {
                 CButton {
                     text: qsTr("Create Antenna")
                     onClicked: {
-                        var data = {"port info": {}};
+                        var data = {
+                            "port info": {}
+                        };
                         for (var i = 0; i < repeater.count; i++) {
                             var item = repeater.itemAt(i);
-                            if (item) {
-                            }
+                            if (item) {}
                         }
                         var jsonString = JSON.stringify(data, null, 2);
                         console.log(jsonString);  // Print JSON to console
-                        antennaManager.saveAntenna("2523.ant", data)
+                        antennaManager.saveAntenna("2523.ant", data);
 
                         // You can send jsonString to C++ or save it to a file
                     }

@@ -2,8 +2,9 @@ import json
 import os
 import base64
 from Crypto.Cipher import AES
-from PySide6.QtCore import Slot, Signal, QObject, Property
+from PySide6.QtCore import Slot, Signal, QObject, Property, QUrl
 from Models.AntennaListModel import AntennaListModel
+from Utils.DatasheetToAntenna import parseDataSheet
 
 SECRET_KEY = b"jiqwfoef4qognot4"
 
@@ -13,7 +14,7 @@ class AntennaManager(QObject):
     def __init__(self, model):
         super().__init__()
         self.model = model
-        
+
     @Property(AntennaListModel)
     def antenna_model(self):
         return self.model
@@ -55,11 +56,19 @@ class AntennaManager(QObject):
         """Save JSON data in an encrypted format."""
         filePath = os.path.join(self.model.directory, fileName)
         encrypted_data = self.encrypt_json(data)
-        with open(filePath, "w") as file:
+        with open(filePath + ".antx", "w") as file:
             file.write(encrypted_data)
 
         print(f"Encrypted JSON saved as {fileName}")
         self.model.loadFiles()  # Update ListModel
+
+    @Slot(str)
+    def parseAntennaFromDatasheet(self, file):
+        """parse antenna from datasheet and save in encrypted format"""
+        antenna_details = parseDataSheet(path=file)
+        print(antenna_details.get("name"))
+        self.saveAntenna(antenna_details.get("name"), antenna_details)
+        self.model.loadFiles()
 
     @Slot(str)
     def deleteFile(self, fileName):

@@ -34,6 +34,6 @@ class AntennaListModel(QAbstractListModel):
     def loadFiles(self):
         """Load all encrypted JSON files into the model and refresh."""
         self.beginResetModel()
-        self.files = [f for f in os.listdir(self.directory) if f.endswith(".ant")]
+        self.files = [f for f in os.listdir(self.directory) if f.endswith(".antx")]
         print("The loaded files are", self.files)
         self.endResetModel()

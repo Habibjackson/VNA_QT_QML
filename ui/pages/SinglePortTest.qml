@@ -6,6 +6,7 @@ import "../Widgets"
 
 Paper {
     id: testsPage
+    property var singlePortList: {}
     ColumnLayout {
         spacing: 10
         height: parent.height
@@ -45,6 +46,14 @@ Paper {
                         Layout.fillWidth: true
                     }
                 }
+                Repeater {
+                    model: singlePortList
+                    delegate: Text {
+                        text: modelData
+                        wrapMode: Text.WordWrap
+                        font.pointSize: 12
+                    }
+                }
             }
         }
         CButton {
@@ -56,7 +65,8 @@ Paper {
     Connections {
         target: antennaManager
         function onFileLoaded(filename, data) {
-            console.log(JSON.stringify(data));
+            console.log(JSON.stringify(data))
+            singlePortList = data
         }
     }
 }
