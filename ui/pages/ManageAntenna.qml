@@ -15,7 +15,6 @@ Paper {
             color: "#003d01"
             title: qsTr("Manage Antenna's")
         }
-
         AntennaList {}
     }
 }

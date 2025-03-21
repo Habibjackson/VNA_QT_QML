@@ -6,12 +6,11 @@ pdf_path = "./ds_ant_4pages.pdf"  # Ensure the PDF is in the same folder
 
 def parseDataSheet(path):
     reader = PdfReader(path)
-    extracted_data = {}
     current_port = None
     frequency_values = []
+    allports = []
     downtilt_values = []
     ports = []
-    antenna_name = ''
 
     # Extract antenna name from the first page
     first_page_text = reader.pages[0].extract_text()
@@ -32,12 +31,12 @@ def parseDataSheet(path):
                     # Save previous port data if available
                     if current_port and frequency_values and downtilt_values:
                         port = current_port.replace(",", "")
-                        extracted_data[port] = {
+                        allports.append(port)
+                        ports.append({
+                            "port": port,
                             "fR": {"min":min(frequency_values), "max": max(frequency_values)},
                             "tR": {"min": float(downtilt_values[0]), "max": float(downtilt_values[-1])}
-                        }
-                        ports.append(extracted_data)
-                    
+                        })
                     # Reset for the new port
                     current_port = match.group(2)
                     frequency_values = []
@@ -59,14 +58,12 @@ def parseDataSheet(path):
     # Save the last port data
     if current_port and frequency_values and downtilt_values:
         current_port.replace(",", "")
-        extracted_data[current_port] = {
-                                    "fR": {"min":min(frequency_values), "max": max(frequency_values)},
-                            "tR": {"min": float(downtilt_values[0]), "max": float(downtilt_values[-1])}
-        }
-        ports.append(extracted_data)
-        extracted_data = {}
-
-    # ports.sort()
+        allports.append(port)
+        ports.append({
+                        "port": port,
+                        "fR": {"min":min(frequency_values), "max": max(frequency_values)},
+                        "tR": {"min": float(downtilt_values[0]), "max": float(downtilt_values[-1])}
+                    })
 
     # return extracted data as a JSON file
     return {"name": "24242", "ports": ports}
