@@ -21,7 +21,7 @@ class AntennaManager(QObject):
     
     def encrypt_json(self, data):
         """Encrypt JSON data using AES."""
-        json_str = json.dumps(data)
+        json_str = json.dumps(data, sort_keys=True)
         cipher = AES.new(SECRET_KEY, AES.MODE_EAX)
         ciphertext, tag = cipher.encrypt_and_digest(json_str.encode())
         return base64.b64encode(cipher.nonce + tag + ciphertext).decode()
@@ -65,7 +65,9 @@ class AntennaManager(QObject):
     @Slot(str)
     def parseAntennaFromDatasheet(self, file):
         """parse antenna from datasheet and save in encrypted format"""
-        antenna_details = parseDataSheet(path=file)
+        url = QUrl(file)
+        path = url.toLocalFile()
+        antenna_details = parseDataSheet(path=path)
         print(antenna_details.get("name"))
         self.saveAntenna(antenna_details.get("name"), antenna_details)
         self.model.loadFiles()

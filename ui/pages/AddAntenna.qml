@@ -36,14 +36,11 @@ Paper {
                     nameFilters: ["document (*.pdf)"]
                     // selectMultiple: false
                     onAccepted: {
-                        console.log(selectedFile.toString().replace("file:///",
-                                                                    ""))
-                        antennaManager.parseAntennaFromDatasheet(
-                                    selectedFile.toString(Qt.RemoveScheme))
+                        antennaManager.parseAntennaFromDatasheet(selectedFile);
                         // You can use fileUrl to load the file or pass it to backend functions.
                     }
                     onRejected: {
-                        console.log("File selection was canceled.")
+                        console.log("File selection was canceled.");
                     }
                 }
 
@@ -150,16 +147,14 @@ Paper {
                     onClicked: {
                         var data = {
                             "port info": {}
-                        }
+                        };
                         for (var i = 0; i < repeater.count; i++) {
-                            var item = repeater.itemAt(i)
-                            if (item) {
-
-                            }
+                            var item = repeater.itemAt(i);
+                            if (item) {}
                         }
-                        var jsonString = JSON.stringify(data, null, 2)
-                        console.log(jsonString) // Print JSON to console
-                        antennaManager.saveAntenna("2523.ant", data)
+                        var jsonString = JSON.stringify(data, null, 2);
+                        console.log(jsonString); // Print JSON to console
+                        antennaManager.saveAntenna("2523.ant", data);
 
                         // You can send jsonString to C++ or save it to a file
                     }

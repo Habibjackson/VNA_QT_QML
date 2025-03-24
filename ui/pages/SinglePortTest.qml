@@ -42,8 +42,7 @@ Paper {
                         currentIndex: -1
                         Layout.fillWidth: true
                         model: antennaModel
-                        onCurrentTextChanged: antennaManager.loadAntenna(
-                                                  antennaCombo.currentText)
+                        onCurrentTextChanged: antennaManager.loadAntenna(antennaCombo.currentText)
                     }
                 }
                 RowLayout {
@@ -115,8 +114,9 @@ Paper {
                                 width: scroller.width
                                 CheckBox {
                                     id: selectBox
+                                    onCheckedChanged: handleSelectPort(checked, index)
                                     Layout.preferredWidth: 40
-                                    checked: modelData.selected
+                                    checked: selectedPorts.includes(index)
                                 }
                                 Text {
                                     Layout.preferredWidth: 80
@@ -169,38 +169,53 @@ Paper {
             }
             CButton {
                 text: qsTr("Start")
+                enabled: selectedPorts.length != 0
             }
         }
     }
 
     function selectAllPorts(checked) {
-        console.log("slecte", checked)
-        for (var i = 0; i < singlePortList.count; i++) {
-            // var rowItem = singlePortList[i]
-            // rowItem.selected = true
-            singlePortList.setProperty(i, "selected", checked)
+        if (checked) {
+            for (var i = 0; i < allPorts.length + 1; i++) {
+                handleSelectPort(checked, i);
+            }
+        }
+        if (!checked) {
+            selectedPorts = [];
+        }
+    }
+
+    function handleSelectPort(checked, index) {
+        var tempList = selectedPorts;
+        if (checked) {
+            if (!selectedPorts.includes(index)) {
+                tempList.push(index);
+                selectedPorts = tempList;
+            }
+        }
+        if (!checked) {
+            selectedPorts = selectedPorts.filter(item => item !== index);
         }
     }
 
     Connections {
         target: antennaManager
         function onFileLoaded(filename, data) {
-            singlePortList = []
-            allPorts = []
-            var tempList = []
-            console.log(JSON.stringify(data))
+            singlePortList = [];
+            allPorts = [];
+            var tempList = [];
+            console.log(JSON.stringify(data));
             for (var i = 0; i < data.allPorts.length; i++) {
-                var port = data.ports[data.allPorts[i]]
+                var port = data.ports[data.allPorts[i]];
                 tempList.push({
-                                  "port": data.allPorts[i],
-                                  "fR": port.fR,
-                                  "tR": port.tR,
-                                  "selected": false // Initialize all items as unselected
-                              })
+                    "port": data.allPorts[i],
+                    "fR": port.fR,
+                    "tR": port.tR,
+                    "selected": false // Initialize all items as unselected
+                });
             }
-            console.log(tempList)
-            allPorts = data.allPorts
-            singlePortList = tempList
+            allPorts = data.allPorts;
+            singlePortList = tempList;
         }
     }
 }

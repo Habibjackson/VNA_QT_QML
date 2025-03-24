@@ -49,6 +49,7 @@ from PySide6.QtWidgets import QApplication
 from Models.AntennaListModel import AntennaListModel
 from settingsManager import SettingsManager
 from Antenna.AntennaManager import AntennaManager
+from RET.RETController import RETController
 
 class ProjectReloader(QObject):
     def __init__(self, engine, project_folder):

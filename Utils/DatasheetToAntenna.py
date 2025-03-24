@@ -5,7 +5,7 @@ import os
 
 def parseDataSheet(path):
     print("/home/habib/Downloads/ds_ant_4pages.pdf" == path, path)
-    reader = PdfReader("/home/habib/Downloads/ds_ant_4pages.pdf")
+    reader = PdfReader(path)
     extracted_data = {}
     current_port = None
     frequency_values = []
@@ -57,11 +57,13 @@ def parseDataSheet(path):
 
     # Save the last port data
     if current_port and frequency_values and downtilt_values:
-        allPorts.append(current_port)
-        extracted_data[current_port] = {
+        allPorts.append(current_port.replace(",", ""))
+        extracted_data[current_port.replace(",","")] = {
             "fR": {"min": min(frequency_values), "max": max(frequency_values)},
             "tR": {"min": downtilt_values[0], "max": downtilt_values[-1]}
         }
+
+    allPorts.sort()
 
     # Add antenna name at the beginning of JSON output
     final_output = {"name": antenna_name,"allPorts": allPorts, "ports": extracted_data}
