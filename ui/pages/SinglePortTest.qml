@@ -6,7 +6,11 @@ import "../Widgets"
 
 Paper {
     id: testsPage
-    property var singlePortList: {}
+
+    property var singlePortList: []
+    property var allPorts: []
+    property var selectedPorts: []
+
     ColumnLayout {
         spacing: 10
         height: parent.height
@@ -24,6 +28,7 @@ Paper {
             ColumnLayout {
                 spacing: 12
                 width: parent.width
+                height: parent.height
                 RowLayout {
                     Layout.fillWidth: true
                     Label {
@@ -37,7 +42,8 @@ Paper {
                         currentIndex: -1
                         Layout.fillWidth: true
                         model: antennaModel
-                        onCurrentTextChanged: antennaManager.loadAntenna(antennaCombo.currentText)
+                        onCurrentTextChanged: antennaManager.loadAntenna(
+                                                  antennaCombo.currentText)
                     }
                 }
                 RowLayout {
@@ -53,7 +59,7 @@ Paper {
                 }
                 RowLayout {
                     Layout.fillWidth: true
-                    visible: antennaCombo.index != -1
+                    visible: antennaCombo.currentIndex != -1
                     CheckBox {
                         id: selectAll
                         Layout.preferredWidth: 40
@@ -96,23 +102,25 @@ Paper {
                     }
                 }
                 ScrollView {
+                    id: scroller
                     Layout.fillWidth: true
+                    Layout.fillHeight: true
                     ColumnLayout {
-                        width: parent.width
+                        width: scroller.width
                         Repeater {
                             id: portRepeater
                             Layout.fillWidth: true
                             model: singlePortList
                             delegate: RowLayout {
-                                Layout.fillWidth: true
-                                Layout.fillHeight: true
+                                width: scroller.width
                                 CheckBox {
                                     id: selectBox
                                     Layout.preferredWidth: 40
+                                    checked: modelData.selected
                                 }
                                 Text {
                                     Layout.preferredWidth: 80
-                                    text: modelData.port
+                                    text: modelData["port"]
                                     font.pixelSize: 16
                                     color: theme.textColor
                                     Layout.fillWidth: true
@@ -150,40 +158,49 @@ Paper {
                     }
                 }
             }
-            Item {
-                RowLayout {
-                    CButton {
-                        variant: "text"
-                        text: qsTr("Back")
-                        onClicked: pageContent.mainStack.pop()
-                    }
-                }
-                RowLayout {
-                    CButton {
-                        text: qsTr("Start")
-                        onClicked: pageContent.mainStack.pop()
-                    }
-                }
+        }
+        RowLayout {
+            Layout.margins: 8
+            Layout.alignment: Qt.AlignRight
+            CButton {
+                variant: "text"
+                text: qsTr("Back")
+                onClicked: pageContent.mainStack.pop()
+            }
+            CButton {
+                text: qsTr("Start")
             }
         }
     }
 
     function selectAllPorts(checked) {
-        console.log("slecte", checked);
-        for (var i = 0; i < portRepeater.count; i++) {
-            var rowItem = portRepeater.itemAt(i);
-            if(rowItem && rowItem.selectBox){
-                console.log("dflsafd")
-            rowItem.selectBox.checked = checked;
-            }
+        console.log("slecte", checked)
+        for (var i = 0; i < singlePortList.count; i++) {
+            // var rowItem = singlePortList[i]
+            // rowItem.selected = true
+            singlePortList.setProperty(i, "selected", checked)
         }
     }
 
     Connections {
         target: antennaManager
         function onFileLoaded(filename, data) {
-            console.log(JSON.stringify(data));
-            singlePortList = data.ports;
+            singlePortList = []
+            allPorts = []
+            var tempList = []
+            console.log(JSON.stringify(data))
+            for (var i = 0; i < data.allPorts.length; i++) {
+                var port = data.ports[data.allPorts[i]]
+                tempList.push({
+                                  "port": data.allPorts[i],
+                                  "fR": port.fR,
+                                  "tR": port.tR,
+                                  "selected": false // Initialize all items as unselected
+                              })
+            }
+            console.log(tempList)
+            allPorts = data.allPorts
+            singlePortList = tempList
         }
     }
 }

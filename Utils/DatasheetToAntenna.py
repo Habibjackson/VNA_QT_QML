@@ -1,25 +1,27 @@
 from PyPDF2 import PdfReader
 import re
 import json
-
-pdf_path = "./ds_ant_4pages.pdf"  # Ensure the PDF is in the same folder
+import os
 
 def parseDataSheet(path):
-    reader = PdfReader(path)
+    print("/home/habib/Downloads/ds_ant_4pages.pdf" == path, path)
+    reader = PdfReader("/home/habib/Downloads/ds_ant_4pages.pdf")
+    extracted_data = {}
     current_port = None
     frequency_values = []
-    allports = []
     downtilt_values = []
-    ports = []
+    antenna_name = ""
+    allPorts = []
 
     # Extract antenna name from the first page
     first_page_text = reader.pages[0].extract_text()
     if first_page_text:
         for line in first_page_text.split("\n"):
             if line.startswith("KRE"):
-                antenna_name = line.strip()
+                antenna_name = line.strip().replace("/", "-")
                 break
 
+    # Process each page
     for page in reader.pages:
         text = page.extract_text()
         if text:
@@ -30,18 +32,16 @@ def parseDataSheet(path):
                 if match:
                     # Save previous port data if available
                     if current_port and frequency_values and downtilt_values:
-                        port = current_port.replace(",", "")
-                        allports.append(port)
-                        ports.append({
-                            "port": port,
-                            "fR": {"min":min(frequency_values), "max": max(frequency_values)},
-                            "tR": {"min": float(downtilt_values[0]), "max": float(downtilt_values[-1])}
-                        })
+                        allPorts.append(current_port.replace(",", ""))
+                        extracted_data[current_port.replace(",", "")] = {
+                            "fR": {"min": min(frequency_values), "max": max(frequency_values)},
+                            "tR": {"min": downtilt_values[0], "max": downtilt_values[-1]}
+                        }
+
                     # Reset for the new port
                     current_port = match.group(2)
                     frequency_values = []
                     downtilt_values = []
-                    extracted_data = {}
 
                 # Extract Frequency Range values (only min and max needed)
                 if line.startswith("Frequency Range"):
@@ -57,13 +57,12 @@ def parseDataSheet(path):
 
     # Save the last port data
     if current_port and frequency_values and downtilt_values:
-        current_port.replace(",", "")
-        allports.append(port)
-        ports.append({
-                        "port": port,
-                        "fR": {"min":min(frequency_values), "max": max(frequency_values)},
-                        "tR": {"min": float(downtilt_values[0]), "max": float(downtilt_values[-1])}
-                    })
+        allPorts.append(current_port)
+        extracted_data[current_port] = {
+            "fR": {"min": min(frequency_values), "max": max(frequency_values)},
+            "tR": {"min": downtilt_values[0], "max": downtilt_values[-1]}
+        }
 
-    # return extracted data as a JSON file
-    return {"name": "24242", "ports": ports}
+    # Add antenna name at the beginning of JSON output
+    final_output = {"name": antenna_name,"allPorts": allPorts, "ports": extracted_data}
+    return final_output

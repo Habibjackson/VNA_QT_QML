@@ -17,6 +17,7 @@
         "ui/Components/Theme.qml",
         "ui/Components/TitleBar.qml",
         "ui/LeftPane/LeftPane.qml",
+        "ui/Widgets/Splash.qml",
         "ui/Widgets/TiltControl.qml",
         "ui/Widgets/listfile.qml",
         "ui/pages/AddAntenna.qml",
