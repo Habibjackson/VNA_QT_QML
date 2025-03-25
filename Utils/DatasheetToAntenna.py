@@ -4,7 +4,6 @@ import json
 import os
 
 def parseDataSheet(path):
-    print("/home/habib/Downloads/ds_ant_4pages.pdf" == path, path)
     reader = PdfReader(path)
     extracted_data = {}
     current_port = None

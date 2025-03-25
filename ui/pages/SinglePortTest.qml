@@ -52,6 +52,7 @@ Paper {
                         color: theme.textColor
                     }
                     CTextField {
+                        id: description
                         Layout.preferredWidth: 100
                         Layout.fillWidth: true
                     }
@@ -170,6 +171,7 @@ Paper {
             CButton {
                 text: qsTr("Start")
                 enabled: selectedPorts.length != 0
+                onClicked: startSinglePortTest()
             }
         }
     }
@@ -183,6 +185,14 @@ Paper {
         if (!checked) {
             selectedPorts = [];
         }
+    }
+
+    function startSinglePortTest(){
+        var portsSelected = []
+        for(var i in selectedPorts){
+            portsSelected.push(singlePortList[i])
+        }
+        test.runSinglePort(antennaCombo.currentText, description.text, portsSelected)
     }
 
     function handleSelectPort(checked, index) {

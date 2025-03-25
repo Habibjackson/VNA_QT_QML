@@ -49,7 +49,7 @@ from PySide6.QtWidgets import QApplication
 from Models.AntennaListModel import AntennaListModel
 from settingsManager import SettingsManager
 from Antenna.AntennaManager import AntennaManager
-from RET.RETController import RETController
+from tests import Tests
 
 class ProjectReloader(QObject):
     def __init__(self, engine, project_folder):
@@ -100,11 +100,14 @@ if __name__ == "__main__":
     settings = SettingsManager()
     antennaModel.loadFiles()
 
+    test = Tests()
+
     antennaManger = AntennaManager(antennaModel)
 
     engine.rootContext().setContextProperty("settingsManager", settings)
     engine.rootContext().setContextProperty("antennaManager", antennaManger)
     engine.rootContext().setContextProperty("antennaModel", antennaModel )
+    engine.rootContext().setContextProperty("test", test )
     engine.load(QUrl.fromLocalFile("ui/main.qml"))
 
     if not engine.rootObjects():
