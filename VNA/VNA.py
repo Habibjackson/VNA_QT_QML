@@ -1016,7 +1016,6 @@ class VNA():
         cmd = "*CLS"
         self.inst.write(cmd)
 
-    @classmethod
     def Remote(self, state):
         cmd = 'SYSTem:DISPlay:UPDate '+ str(state)
         self.inst.write(cmd)
@@ -1833,6 +1832,7 @@ class VNA():
         if test == 'two':
             for i in self.res:
                 if i in filename:
+                    ex = self.sfol
                     subfold = os.path.join(self.sfol, i)
                     # path=f"{subfold}\\Marker{filename}.txt"
                     path = os.path.join(subfold, f"Marker{filename}.txt")
@@ -1840,7 +1840,7 @@ class VNA():
                     self.inst.write(cmd1)
                     # self.inst.write("HCOP:DEST 'MMEM'; :HCOP")
             print(f"path from marker_text single or two port{subfold}")
-            excel.get_port_name_from_filename(path, subfold)
+            excel.get_port_name_from_filename(path, subfold, ex)
         elif test == 'inter':
             for i in self.res:
                 if i in filename:
@@ -2180,7 +2180,6 @@ class VNA():
                             self.ccuLib.settilt(port, newtilt)
                             time.sleep(2)
                             self.ccuLib.getcommandresults()
-                            print(newtilt)
                             time.sleep(16)
 
                     if a == 'MAX':

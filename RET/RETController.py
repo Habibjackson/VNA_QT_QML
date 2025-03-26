@@ -251,11 +251,8 @@ class RETController(QObject):
 
         data=self.extract_data(self.new_list)
         RETController.AVAILABLE_PORTS = {value: key for key, value in data}
-        print(RETController.AVAILABLE_PORTS)
         with open('text.txt','w') as file:
             file.write(str(data))
-
-
 
 
     def extract_data(self,data):
@@ -311,6 +308,7 @@ class RETController(QObject):
         # cmd = b'SetTilt:1,1,20\n'
         self.s.send(cmd)
         task_id = self.s.recv(1024).decode().split(":")[1].strip()
+        print("Setting tilt", port, phase, tilt)
         status = self.getcommandresults(task_id)
         while status == 'EXEC_RESULT_PENDING':
             if self.getcommandresults(task_id) != "EXEC_RESULT_PENDING":

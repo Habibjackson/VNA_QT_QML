@@ -43,7 +43,7 @@
 
 import sys
 import os
-from PySide6.QtCore import QFileSystemWatcher, QUrl, QObject
+from PySide6.QtCore import QFileSystemWatcher, QUrl, QObject, QProcess
 from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtWidgets import QApplication
 from Models.AntennaListModel import AntennaListModel
@@ -100,6 +100,7 @@ if __name__ == "__main__":
     settings = SettingsManager()
     antennaModel.loadFiles()
 
+    process = QProcess()
     test = Tests()
 
     antennaManger = AntennaManager(antennaModel)

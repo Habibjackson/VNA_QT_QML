@@ -123,7 +123,49 @@ def extract_and_append_data(file_path, excel_file_path, column_to_update, port_n
     df_existing.to_excel(excel_file_path, index=False)
 
 
-def get_port_name_from_filename(filename,fold):
+# def get_port_name_from_filename(filename,fold):
+#     # Extract port name (e.g., R1 from R1_marker_min.txt)
+#     print(f"filepath from vna.py {filename}")
+#     print(f"folder directory from vna.py {fold}")
+#     base_name = os.path.basename(filename)  # e.g., 'marker2585__min.txt'
+#     port_name = base_name.split('_')[1]  # e.g., 'R1'
+
+# # Path to the Excel file where data will be saved
+# #     excel_file_path = os.path.join(fold,f"\\output.xlsx")
+
+# # Initialize the Excel file before the loop starts
+# #     if 'worstcase' not  in base_name.lower():
+#     excel_file_path = os.path.join(fold, f"\\output.xlsx")
+#     if os.path.exists(excel_file_path):
+#         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+#         excelname = f"output_{timestamp}"
+#         newexcelpath = os.path.join(fold,excelname)
+#     else:
+#         newexcelpath = os.path.join(fold,f"\\output.xlsx")
+#     initialize_excel_file(newexcelpath)
+#     # else:
+#     #     excel_file_path = os.path.join(fold, f"\\output_worstcase.xlsx")
+#     #     worstcase_excel_file(excel_file_path)
+
+
+# # Loop through the text files and extract & append data
+#     # Determine which column to update based on the file name
+#     if 'min' in base_name.lower():
+#         column_to_update = 'Min'
+#     elif 'mid' in base_name.lower():
+#         column_to_update = 'Mid'
+#     elif 'max' in base_name.lower():
+#         column_to_update = 'Max'
+#     elif 'worstcase' in base_name.lower():
+#         column_to_update = 'Worstcase'
+
+#     # # to choose which file to append (out-excel or worstcase-excel)
+#     # if column_to_update == 'new' :
+#     #     worstcase(filename)
+#     # else:
+#     extract_and_append_data(filename, excel_file_path, column_to_update, port_name)
+
+def get_port_name_from_filename(filename,fold,exc):
     # Extract port name (e.g., R1 from R1_marker_min.txt)
     print(f"filepath from vna.py {filename}")
     print(f"folder directory from vna.py {fold}")
@@ -135,14 +177,16 @@ def get_port_name_from_filename(filename,fold):
 
 # Initialize the Excel file before the loop starts
 #     if 'worstcase' not  in base_name.lower():
-    excel_file_path = os.path.join(fold, f"\\output.xlsx")
-    if os.path.exists(excel_file_path):
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        excelname = f"output_{timestamp}"
-        newexcelpath = os.path.join(fold,excelname)
-    else:
-        newexcelpath = os.path.join(fold,f"\\output.xlsx")
-    initialize_excel_file(newexcelpath)
+    excel_file_path = os.path.join(exc, f"output.xlsx")
+    initialize_excel_file(excel_file_path)
+#     excel_file_path = os.path.join(fold, f"\\output.xlsx")
+#     if os.path.exists(excel_file_path):
+#         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+#         excelname = f"output_{timestamp}"
+#         newexcelpath = os.path.join(fold,excelname)
+#     else:
+#         newexcelpath = os.path.join(fold,f"\\output.xlsx")
+#     initialize_excel_file(newexcelpath)
     # else:
     #     excel_file_path = os.path.join(fold, f"\\output_worstcase.xlsx")
     #     worstcase_excel_file(excel_file_path)
@@ -164,7 +208,6 @@ def get_port_name_from_filename(filename,fold):
     #     worstcase(filename)
     # else:
     extract_and_append_data(filename, excel_file_path, column_to_update, port_name)
-
 # def get_interband(filename,fold) :
 #     print(f"filepath from vna.py {filename}")
 #     print(f"folder directory from vna.py {fold}")

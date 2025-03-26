@@ -7,21 +7,26 @@ class Tests(QObject):
     vnaOperationCompleted = Signal(str)
     errorOccurred = Signal(str)
 
+    startSinglePort = Signal(str, str, list)
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self._worker = Worker()
         self._thread = QThread()
         self._worker.moveToThread(self._thread)
+        self._thread.started.connect(self.initilizeSystem)
 
         # Connect signals
+        self._thread.start()
+
+        self._is_busy = self._worker.is_busy()
+    def initilizeSystem(self):
+        self._worker.initialize()
         self._worker.switchPositionChanged.connect(self._update_switch_positions)
         self._worker.busyChanged.connect(self._update_busy)
         self._worker.vnaOperationCompleted.connect(self.vnaOperationCompleted)
         self._worker.errorOccurred.connect(self.errorOccurred)
-
-        self._thread.start()
-
-        self._is_busy = self._worker.is_busy()
+        self.startSinglePort.connect(self._worker.run_singlePort)
 
     @Property(int, notify=switchPositionChanged)
     def r1_position(self):
@@ -57,7 +62,8 @@ class Tests(QObject):
     @Slot(str, str, list)
     def runSinglePort(self, name, description, ports):
         print(name, description, ports)
-        self._worker.run_singlePort(name, description, ports)
+        # self._worker.run_singlePort(name, description, ports)
+        self.startSinglePort.emit(name, description, ports)
 
     def cleanup(self):
         self._worker.switch_controller.close_connection()

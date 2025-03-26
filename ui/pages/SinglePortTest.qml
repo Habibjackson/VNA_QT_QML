@@ -189,10 +189,10 @@ Paper {
 
     function startSinglePortTest(){
         var portsSelected = []
-        for(var i in selectedPorts){
-            portsSelected.push(singlePortList[i])
-        }
-        test.runSinglePort(antennaCombo.currentText, description.text, portsSelected)
+        selectedPorts.forEach((ports, i)=>{
+            portsSelected.push(singlePortList[ports])
+        })
+        test.runSinglePort(antennaCombo.currentText.replace(" ", ""), description.text, portsSelected)
     }
 
     function handleSelectPort(checked, index) {
@@ -221,7 +221,7 @@ Paper {
                     "port": data.allPorts[i],
                     "fR": port.fR,
                     "tR": port.tR,
-                    "selected": false // Initialize all items as unselected
+                    "index": i + 1 // Initialize all items as unselected
                 });
             }
             allPorts = data.allPorts;
