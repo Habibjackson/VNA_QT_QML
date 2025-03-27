@@ -45,11 +45,10 @@ ColumnLayout {
     Layout.fillHeight: true
 
     Label {
-        text: qsTr("Available Tests's")
+        text: qsTr("Available Test's")
         font.pixelSize: 16
         color: theme.textColorSecondary
         font.bold: true
-        width: parent.width
         Layout.alignment: Qt.AlignLeft
         Layout.leftMargin: 12
     }
@@ -62,7 +61,7 @@ ColumnLayout {
         model: ListModel {
             ListElement {
                 name: "Single Port"
-                value: "Tests the signle port of the antenna"
+                value: "Tests the single port of the antenna"
             }
             ListElement {
                 name: "Double Port"
