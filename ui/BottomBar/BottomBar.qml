@@ -23,7 +23,7 @@ Rectangle {
         spacing: 0
         Text {
             id: slidingText
-            text: statusBar.text
+            text: test.progress.status
             font.pixelSize: 24
             color: theme.textColor
             // Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
@@ -31,11 +31,9 @@ Rectangle {
 
         ProgressBar {
             visible: !value == 0
-            value: 0
             from: 0
             to: 100
             id: progress
-            indeterminate: true
             Layout.fillWidth: true
         }
 

@@ -170,7 +170,7 @@ Paper {
             }
             CButton {
                 text: qsTr("Start")
-                enabled: selectedPorts.length != 0
+                enabled: selectedPorts.length != 0 || !test.isBusy
                 onClicked: startSinglePortTest()
             }
         }

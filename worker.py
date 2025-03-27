@@ -11,7 +11,7 @@ class Worker(QObject):
     retTiltChanged = Signal(str, int)
     busyChanged = Signal(bool)
     errorOccurred = Signal(str)
-    statuSignal = Signal(str)
+    statuSignal = Signal(dict)
 
     def __init__(self):
         super().__init__()
@@ -68,7 +68,7 @@ class Worker(QObject):
             return
 
         try:
-            self.statuSignal.emit("Initializing the test")
+            self.statuSignal.emit({"status": "Initializing the test", "deter":  1 , "progress": 1})
             self.switch_controller.set_r1_r2_pos(0, 0) # set the switch position to 0
             self.vna.Remote("ON")
             self.vna.create_folder_two_port(name)
@@ -96,13 +96,13 @@ class Worker(QObject):
                 else:
                     mid = 5
 
-                # self.vna.load_zvx(f"{startFreq}-{stopFreq}-1")
-                self.vna.load_zvx(f"617-894-AMAL-3")
+                self.vna.load_zvx(f"{startFreq}-{stopFreq}")
+                # self.vna.load_zvx(f"617-894-AMAL-3")
                 
-                self.retController.settilt(portName, minTilt)
+                self.statuSignal.emit({"status": f"Setting tilt {portName} to {minTilt}", "deter": 1, "progress": 1})
+                self.retController.settilt(portName, minTilt * 10)
 
                 self.vna.Frequency(port.get("fR").get("min"), port.get("fR").get("max"), "MHz")
-                print(port, "Port")
                 for i in range(1, 4):
                     self.vna.Trace_window(i, 1)
                     self.vna.vna_win_display(i, "ON")
@@ -119,11 +119,12 @@ class Worker(QObject):
                 tilt = [minTilt, mid, maxTilt]
                 for degree in tilt:
                     pRange=('min','mid','max')
-                    print(portName, "portname")
+                    ran = pRange[tilt.index(degree)]
+                    self.statuSignal.emit({"status": f"Measuring {pRange[tilt.index(degree)]} value", "progress": 40, "deter": 1})
                     degName = int(degree * 10)
                     self.retController.settilt(portName,degName)
                     time.sleep(1)
-                    print(degree, portName, pRange[tilt.index(degree)])
+                    self.statuSignal.emit({"status": f"Saving measured values for port {portName} {ran}", "deter": 1, "progress": 20})
                     self.vna.twoport_VNA_savescreen(f"{portName}_{pRange[tilt.index(degree)]}", "two")
                     self.vna.save_S2P(f"{portName}_{pRange[tilt.index(degree)]}", "two")
                     self.vna.Marker_Text(f"{portName}_{pRange[tilt.index(degree)]}", "two")
@@ -133,31 +134,36 @@ class Worker(QObject):
 
                 a = "MAX"
 
-                # self.vna.load_zvx(f"{startFreq}-{stopFreq}-1")
-                self.vna.load_zvx(f"617-894-AMAL-3")
+                self.vna.load_zvx(f"{startFreq}-{stopFreq}")
+                # self.vna.load_zvx(f"617-894-AMAL-3")
                 self.vna.Frequency(startFreq, stopFreq, "MHz")
 
+                self.statuSignal.emit({"status": "Enabling smooth shift hold", "progress":  4, "deter": 1})
                 for i in range(1, 4):
                     self.vna.Trace_window(i, 1)
                     self.vna.vna_win_display(i, "ON")
                     self.vna.vna_window(i, s_param[i - 1], i , s_format[i - 1])
                     self.vna.vna_3marker("ON", stopFreq, startFreq)
                     self.vna.vna_smooth(a)
-                    # time.sleep(2)
                     self.vna.vna_win_display(i, "OFF")
 
                 for i in range(1, 3):
                     self.vna.vna_scale_div(i, pDiv[i - 1], rlev[i - 1], 50, 'ON', i)
                 self.vna.vna_set_sweep_points(1601, 10)
 
+                self.statuSignal.emit({"status": f"Setting tilt to max for {portName}", "deter": 1, "progress": 2})
                 self.retController.settilt(portName, maxTilt * 10)
 
+                self.statuSignal.emit({"status": f"Saving worstcase values for port {portName}", "deter": 1, "progress": 20})
                 self.vna.twoport_VNA_savescreen(f"{portName}_{pRange[tilt.index(degree)]}_worstcase", "two")
                 self.vna.save_S2P(f"{portName}_{pRange[tilt.index(degree)]}_worstcase", "two")
                 self.vna.Marker_Text(f"{portName}_{pRange[tilt.index(degree)]}_worstcase", "two")
+            
+            self.statuSignal.emit({"status": "Completed Single Port test", 'progress':  100, "deter": 0})
 
         except Exception as e:
             self.errorOccurred.emit(f"VNA two_port failed: {e}")
+            self.statuSignal.emit({"status": "Completed Single Port test", 'progress':  100, "deter": 0})
             print(e, "Error occured")
         finally:
             self._end_operation()
@@ -176,7 +182,7 @@ class Worker(QObject):
         if not self._start_operation():
             return
         try:
-            self.retController.set_tilt(port, tilt)
+            self.retController.settilt(port, tilt)
         finally:
             self._end_operation()
 
@@ -190,7 +196,7 @@ class Worker(QObject):
             self._end_operation()
 
     def get_ret_tilt(self, phase):
-        return self.retController.get_tilt(phase)
+        return self.retController.gettilt(phase)
 
     def is_busy(self):
         return self._is_busy

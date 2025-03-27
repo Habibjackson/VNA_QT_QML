@@ -308,7 +308,7 @@ class RETController(QObject):
         # cmd = b'SetTilt:1,1,20\n'
         self.s.send(cmd)
         task_id = self.s.recv(1024).decode().split(":")[1].strip()
-        print("Setting tilt", port, phase, tilt)
+        print("Setting tilt", port, RETController.AVAILABLE_PORTS[port], phase, tilt)
         status = self.getcommandresults(task_id)
         while status == 'EXEC_RESULT_PENDING':
             if self.getcommandresults(task_id) != "EXEC_RESULT_PENDING":

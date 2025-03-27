@@ -47,5 +47,8 @@ Window {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
+        indeterminate: test.progress.deter
+        value: test.progress.progress
+        text: test.progress.status
     }
 }

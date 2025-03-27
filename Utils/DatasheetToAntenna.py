@@ -65,5 +65,5 @@ def parseDataSheet(path):
     allPorts.sort()
 
     # Add antenna name at the beginning of JSON output
-    final_output = {"name": antenna_name,"allPorts": allPorts, "ports": extracted_data}
+    final_output = {"name": "840590966", "allPorts": allPorts, "ports": extracted_data}
     return final_output

@@ -291,11 +291,11 @@ def add_border(ws, start_cell, end_cell):
 
 
 if __name__ == "__main__":
-    main_folder = r"C:\Users\harini.puche\Documents"
-    user_name = input("Enter the user name: ")
-    print(os.listdir(os.path.join(main_folder, user_name)))
-    antenna_model_number = input("Antenna model number: ")
-    os.chdir(os.path.join(main_folder, user_name, antenna_model_number))
+    main_folder = r"D:\840590966dfs.antx\S-Parameter\singleport"
+    # user_name = input("Enter the user name: ")
+    # print(os.listdir(os.path.join(main_folder)))
+    # antenna_model_number = input("Antenna model number: ")
+    os.chdir(main_folder)
     group_item, description = read_excel_files()
 
     complete_group = group_items(group_item)

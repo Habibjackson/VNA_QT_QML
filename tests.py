@@ -9,6 +9,8 @@ class Tests(QObject):
 
     startSinglePort = Signal(str, str, list)
 
+    progressChanged = Signal()
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self._worker = Worker()
@@ -20,6 +22,10 @@ class Tests(QObject):
         self._thread.start()
 
         self._is_busy = self._worker.is_busy()
+        self._status = ""
+        self._progress = {}
+        self._isDeterminate = 0
+
     def initilizeSystem(self):
         self._worker.initialize()
         self._worker.switchPositionChanged.connect(self._update_switch_positions)
@@ -27,6 +33,7 @@ class Tests(QObject):
         self._worker.vnaOperationCompleted.connect(self.vnaOperationCompleted)
         self._worker.errorOccurred.connect(self.errorOccurred)
         self.startSinglePort.connect(self._worker.run_singlePort)
+        self._worker.statuSignal.connect(self._update_progress)
 
     @Property(int, notify=switchPositionChanged)
     def r1_position(self):
@@ -39,6 +46,15 @@ class Tests(QObject):
     @Property(bool, notify=busyChanged)
     def isBusy(self):
         return self._is_busy
+    
+    @Property(dict, notify=progressChanged)
+    def progress(self):
+        return self._progress
+    
+    @Slot(tuple)
+    def _update_progress(self, progress):
+        self._progress = progress
+        self.progressChanged.emit()
 
     @Slot(int, int)
     def _update_switch_positions(self, r1, r2):
