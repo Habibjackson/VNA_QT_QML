@@ -116,6 +116,9 @@ class Worker(QObject):
                     self.vna.vna_scale_div(i, pDiv[i - 1], rlev[i - 1], 50, 'ON', i)
                 self.vna.vna_set_sweep_points(1601, 10)
 
+                self.vna.vna_Assign_3layout()
+                self.vna.vna_hardcopy_3()
+
                 tilt = [minTilt, mid, maxTilt]
                 for degree in tilt:
                     pRange=('min','mid','max')
@@ -150,6 +153,9 @@ class Worker(QObject):
                 for i in range(1, 3):
                     self.vna.vna_scale_div(i, pDiv[i - 1], rlev[i - 1], 50, 'ON', i)
                 self.vna.vna_set_sweep_points(1601, 10)
+
+                self.vna.vna_Assign_3layout()
+                self.vna.vna_hardcopy_3()
 
                 self.statuSignal.emit({"status": f"Setting tilt to max for {portName}", "deter": 1, "progress": 2})
                 self.retController.settilt(portName, maxTilt * 10)

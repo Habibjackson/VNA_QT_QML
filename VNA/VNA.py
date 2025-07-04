@@ -1171,6 +1171,16 @@ class VNA():
         self.inst.write(cmd2)
         self.inst.write(cmd5)
 
+    def vna_Assign_3layout(self):
+        cmd = "*:DISPlay:LAYout:DEFine 3, Horizantal, '1.00,0.50,0.50;1.00,0.50'"
+        cmd1 = ':DISPlay:LAYout:APPLy 3'
+        self.inst.write(cmd)
+        self.inst.write(cmd1)
+    
+    def vna_hardcopy_3(self):
+        cmd = f"HCOPy:PAGE:WINDow ALL"
+        self.inst.write(cmd)
+
     def vna_3marker(self,state,start_fr,stop_fr):
 
         cmd1 = f":CALC1:MARK1 {state}"
